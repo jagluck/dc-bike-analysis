@@ -2,3 +2,7 @@
 data/accidents.txt
 data/Crashes_in_DC.csv
 accidents_resp_text.txt
+*.csv
+*.csv
+*.csv
+data/bikeVehData.csv
