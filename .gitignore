@@ -7,3 +7,4 @@ accidents_resp_text.txt
 *.csv
 data/bikeVehData.csv
 data/bikeVehData.csv
+*.csv
