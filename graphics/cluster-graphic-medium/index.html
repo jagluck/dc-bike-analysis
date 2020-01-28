@@ -194,6 +194,9 @@
     </div>
     <script type="text/javascript">
 
+      var scripts = document.getElementsByTagName("script");
+      var fileBase = (scripts[scripts.length-1].baseURI).split("/dc-bike-analysis/")[0];
+
       var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
         '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
         'Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -207,7 +210,7 @@
         layers: [streets]
       });
 
-      d3.csv("/dc-bike-analysis/data/clusteredAccidentLevelData/13clusteredAccidentLevelData.csv", function(data) {
+      d3.csv(fileBase + "/dc-bike-analysis/data/clusteredAccidentLevelData/13clusteredAccidentLevelData.csv", function(data) {
 
         var planes = [];
 
@@ -244,7 +247,7 @@
       }
 
       var legend = L.control({position: 'bottomright'});
-      var ourgeoJSON = jQuery.getJSON("/dc-bike-analysis/data/geoJSONS/13geoJSON.geojson", function( data ) {
+      var ourgeoJSON = jQuery.getJSON(fileBase + "/dc-bike-analysis/data/geoJSONS/13geoJSON.geojson", function( data ) {
         var track = new L.geoJSON(data,{
           style: function(feature) {
 

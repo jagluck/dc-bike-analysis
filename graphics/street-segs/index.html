@@ -193,7 +193,8 @@
     <div id="mapid">
     </div>
     <script type="text/javascript">
-      
+     var scripts = document.getElementsByTagName("script");
+     var fileBase = (scripts[scripts.length-1].baseURI).split("/dc-bike-analysis/")[0];
 
      var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
         '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
@@ -255,7 +256,8 @@
           }
         });
 
-       var track = omnivore.kml("/dc-bike-analysis/data/bike-lanes.kml", null, customLayer);
+
+       var track = omnivore.kml(fileBase + "/dc-bike-analysis/data/bike-lanes.kml", null, customLayer);
 
 
       mymap.addLayer(track);
@@ -268,7 +270,12 @@
           
 
 
-        div.innerHTML = '<div style="width: 220px; height: 160px; border:2px solid grey; z-index:9999; background-color:white;opacity: .8 font-size:14px; font-weight: bold;"><div style= "text-align:center">Street Bike Facilities</div><br><div><div>Shared Lane </div><div style="margin-top:-14px;margin-left:180px;height:10px;width:10px;background-color:orange;">  </div></div><div><div>Contraflow Bike Lane </div><div style="margin-top:-14px;margin-left:180px;height:10px;width:10px;background-color:purple;">  </div></div><div><div>Existing Lane </div><div style="margin-top:-14px;margin-left:180px;height:10px;width:10px;background-color:blue;">  </div></div><div><div>Climbing Lane </div><div style="margin-top:-14px;margin-left:180px;height:10px;width:10px;background-color:pink;">  </div></div><div><div>Cycle Track </div><div style="margin-top:-14px;margin-left:180px;height:10px;width:10px;background-color:green;">  </div></div></div>';
+        div.innerHTML = '<div style="width: 220px; height: 160px; border:2px solid grey; z-index:9999; background-color:white;opacity: .8 font-size:14px; font-weight: bold;"><div style= "text-align:center">Street Bike Facilities</div><br>\
+          <div><div style="margin-left:0;">Shared Lane </div><div style="margin-top:-14px;margin-left:180px;height:10px;width:10px;background-color:orange;"></div></div>\
+          <div><div>Contraflow Bike Lane </div><div style="margin-top:-14px;margin-left:180px;height:10px;width:10px;background-color:purple;"></div></div>\
+          <div><div>Existing Lane </div><div style="margin-top:-14px;margin-left:180px;height:10px;width:10px;background-color:blue;"></div></div>\
+          <div><div>Climbing Lane </div><div style="margin-top:-14px;margin-left:180px;height:10px;width:10px;background-color:pink;"></div></div>\
+          <div><div>Cycle Track </div><div style="margin-top:-14px;margin-left:180px;height:10px;width:10px;background-color:green;"></div></div></div>';
         return div;
       };
 
