@@ -9,7 +9,7 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-  <!-- Load leaflet.css -->
+    <!-- Load leaflet.css -->
   <link href="css/leaflet.css" rel="stylesheet">
 
   <!-- Load leaflet.js -->
@@ -19,11 +19,25 @@
   <!-- Load our css -->
   <link href="css/css.css" rel="stylesheet">
 
+   <!-- load Esri Leaflet because we want to use an Esri basemap -->
+  <script src="https://unpkg.com/esri-leaflet@2.3/dist/esri-leaflet.js"></script>
+
+  <!-- load animation tweening lib requirement for CanvasFlowMapLayer -->
+  <script src="https://unpkg.com/@tweenjs/tween.js@18.5/dist/tween.umd.js"></script>
+
+  <!-- then load CanvasFlowMapLayer -->
+  <script src="canvasFlowmapLayer.js"></script>
+
+  <!-- also load 3rd-party CSV parsing libary just for this demo  -->
+  <script src="https://unpkg.com/papaparse@5.1/papaparse.min.js"></script>
+
   <!-- Load kml lib -->
   <script src="js/kml.js"></script>
 
   <!-- font -->
   <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,400i,700,700i|Poppins:300,400,500,600,700&amp;subset=latin-ext" rel="stylesheet">
+
+
 
   <!-- for style other than leaflet -->
   <style type="text/css">
