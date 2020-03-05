@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>DC Bike Clusters</title>
+  <title>DC Bike Accidents</title>
 
    <!-- d3 import -->
   <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
@@ -183,10 +183,10 @@
 
 <body>
   <div id="container" style="min-width: 300px; max-width: 700px; display: flex;flex-direction: column; margin: 0 auto">
-  <h1>Locations of bike accident clusters in DC</h1>
+  <h1>Locations of bike accidents on DC roads.</h1>
   <span style="height:8px; font-size:8pt; background-color:#2eb3f7; color:#2eb3f7;"></span><h3>BY JAKE GLUCK<a href="https://wamu.org/" target="_blank" style="text-decoration:none;"> | WAMU </a></h3>
   <h5>
-      These hotspot were located using a clustering algorithim on bike accidents in DC. Click on the locations to view the hotspots highlighted in our story.
+      Add description of graphic here.
   </h5>
 
 
@@ -204,186 +204,164 @@
 
       var streets  = L.tileLayer(mbUrl, {id: 'mapbox.streets',   attribution: mbAttr});
 
-      var mymap = L.map('mapid', {
-        center: [38.9075, -77.033],
-        zoom: 13,
-        layers: [streets]
+    d3.csv(fileBase + "/dc-bike-analysis/data/modified data/bikeShareStationTotals.csv", function(data) {
+
+      var planes = [];
+
+      var yellowIcon = new L.Icon({
+        iconUrl: 'css/images/marker-icon-yellow.png',
+        iconSize: [9, 13.5],
+        iconAnchor: [4.5, 13.5],
+        popupAnchor: [0, -13.5]
       });
 
-      d3.csv(fileBase + "/dc-bike-analysis/data/cluster data/17clusteredAccidentLevelData.csv", function(data) {
-
-        var planes = [];
-
-        var yellowIcon = new L.Icon({
-          iconUrl: 'css/images/marker-icon-yellow.png',
-          iconSize: [9, 13.5],
-          iconAnchor: [4.5, 13.5],
-          popupAnchor: [0, -13.5]
-        });
+      var redIcon = new L.Icon({
+        iconUrl: 'css/images/marker-icon-red.png',
+        iconSize: [9, 13.5],
+        iconAnchor: [4.5, 13.5],
+        popupAnchor: [0, -13.5]
+      });
 
         arrsize = data.length;        
         var yes = [];
 
         for (var i = 1; i < arrsize; i++) {
-          marker = new L.marker([data[i].LATITUDE,data[i].LONGITUDE],{icon: yellowIcon});
-          yes.push(marker);
+            marker = new L.circle([data[i].station_lat,data[i].station_long],{radius:Math.ceiling(data[i].total_out/1000)}).bindPopup("Total Arivals: " + data[i].total_in + "\nTotal Departures: " + data[i].total_out);
+            yes.push(marker);
+            
         }
 
         var yesPoints = L.layerGroup(yes);
-                                       
+
         var baseMaps = {
         };
 
         var overlayMaps = {
-          "View accidents in clusters": yesPoints,
+          "Bike Share Locations": yesPoints        
         };
 
-        L.control.layers(baseMaps, overlayMaps).addTo(mymap);
-      });
-
-
-      function gotoOut(){
-        mymap.setView(L.latLng(38.9075, -77.033), 13);
-      }
-
-      var legend = L.control({position: 'bottomright'});
-      var ourgeoJSON = jQuery.getJSON(fileBase + "/dc-bike-analysis/data/geoJSONS/17geoJSON.geojson", function( data ) {
-        var track = new L.geoJSON(data,{
-          style: function(feature) {
-
-            if (feature['properties']['primaryFacilityType'] == "None") {
-              return {
-                     'fillColor': 'red',
-                     'fillOpacity' : .5,
-                     'color' : 'black'
-                 }
-            } else if (feature['properties']['primaryFacilityType'] == "Shared Lane"){
-                 return {
-                     'fillColor': 'orange',
-                     'fillOpacity' : .5,
-                     'color' : 'black'
-                 }
-            } else if(feature['properties']['primaryFacilityType'] == "Contraflow Bike Lane"){
-                 return {
-                     'fillColor': 'purple',
-                     'fillOpacity' : .5,
-                     'color' : 'black'
-                 }
-            } else if(feature['properties']['primaryFacilityType'] == "Existing Bike Lane"){
-                 return {
-                     'fillColor': 'blue',
-                     'fillOpacity' : .5,
-                     'color' : 'black'
-                 }
-            } else if (feature['properties']['primaryFacilityType'] == "Climbing Lane"){
-                 return {
-                     'fillColor': 'pink',
-                     'fillOpacity' : .5,
-                     'color' : 'black'
-                 }
-            } else if (feature['properties']['primaryFacilityType'] == "Cycle Track"){
-                 return {
-                     'fillColor': 'green',
-                     'fillOpacity' : .5,
-                     'color' : 'black'
-                 }
-            }
-             else {
-                 return {
-                     'fillColor': 'black',
-                     'fillOpacity' : .5,
-                     'color' : 'black'
-                 }
-            }
-          },
-          // Put onEachFeature within the options object, not as 3rd argument.
-          onEachFeature: function(feature, layer) {
-            layer.bindPopup(feature.properties.primaryStreet);
-          }
+        var mymap = L.map('mapid', {
+          center: [38.9075, -77.033],
+          zoom: 13,
+          layers: [streets]
         });
-        mymap.addLayer(track);
-      });
-      
 
-      var legend = L.control({position: 'topright'});
+        L.control.layers(baseMaps, overlayMaps).addTo(mymap);
+        yesPoints.addTo(mymap);
 
-      legend.onAdd = function (mymap) {
+        var legend = L.control({position: 'bottomright'});
+
+        legend.onAdd = function (mymap) {
 
         var div = L.DomUtil.create('div', 'info legend'),
           labels = [];
           labels.push(
-            '<span style=\"text-align:center\""> Click to view clusters </span><br>');
-          labels.push(
-            '<span class = "jumpTo" onclick="gotoOut()">  &nbsp Zoom Out  &nbsp </span><br>');
+          '<i style="background:' + "#FF0000" + '"></i>' + " Deaths");
+        labels.push(
+          '<i style="background:' + "#CCC62C" + '"></i>' + " Serious Injuries");
 
 
-        div.innerHTML = labels.join('<br>');
-        return div;
-      };
+          div.innerHTML = labels.join('<br>');
+          return div;
+        };
 
-      legend.addTo(mymap);
-      //this changes marker size when zoom changes
-      mymap.on('zoomend', function() {
-        mymap.eachLayer(function (layer) {
-          if(layer instanceof L.Marker){
+        legend.addTo(mymap);
+
+        //this changes marker size when zoom changes
+        mymap.on('zoomend', function() {
+
+          mymap.eachLayer(function (layer) {
+            if(layer instanceof L.Marker){
               changeIconSize(layer);
-          }
+            }
+          });
         });
-      });
 
-      //this makes sure objects are rights size when reloaded
-      mymap.on('overlayadd', function() {
-        mymap.eachLayer(function (layer) {
-          if(layer instanceof L.Marker){
+        //this makes sure objects are rights size when reloaded
+        mymap.on('overlayadd', function() {
+
+          mymap.eachLayer(function (layer) {
+            if(layer instanceof L.Marker){
               changeIconSize(layer);
-          }
+            }
+          });
         });
-      });
 
-       //resize one marker
-      function changeIconSize(myMarker) {
+           //resize one marker
+    function changeIconSize(myMarker) {
 
-        // this is the default size (of the default icon); it should be known beforehand;
-        var defaultIconSize = new L.Point(9, 13.5);
-        var defaultIconAnchor = new L.Point(4.5, 13.5);
+      // this is the default size (of the default icon); it should be known beforehand;
+      var defaultIconSize = new L.Point(9, 13.5);
+      var defaultIconAnchor = new L.Point(4.5, 13.5);
+      var defaultPopupAnchor = new L.Point(0, -13.5);
 
-        // use leaflet's internal methods to scale the size (a bit overkill for this case...)
-        var transformation = new L.Transformation(1, 0, 1, 0);
 
-        var currentZoom = mymap.getZoom();
-        var newIconSize = transformation.transform(defaultIconSize, sizeFactor(currentZoom));
+      // use leaflet's internal methods to scale the size (a bit overkill for this case...)
+      var transformation = new L.Transformation(1, 0, 1, 0);
 
-        // adjust the icon anchor to the new size
-        var newIconAnchor = new L.Point(Math.round(newIconSize.x / 2), newIconSize.y);
+      var currentZoom = mymap.getZoom();
+      var newIconSize = transformation.transform(defaultIconSize, sizeFactor(currentZoom));
+      var newpopupAnchor = transformation.transform(defaultPopupAnchor, sizeFactor(currentZoom));
 
+      // adjust the icon anchor to the new size
+      var newIconAnchor = new L.Point(Math.round(newIconSize.x / 2), newIconSize.y);
+
+      iconUrl = myMarker._icon.src;
+      if (iconUrl.includes("marker-icon-red")){
         // finally, declare a new icon and update the marker
         iconUrl = myMarker._icon.src;
-        var newIcon = new L.Icon({
-          iconUrl: 'css/images/marker-icon-yellow.png',
-          iconSize: newIconSize,
-          iconAnchor: newIconAnchor,
-        });
-        myMarker.setIcon(newIcon);
+           var newIcon = new L.Icon({
+              iconUrl: 'css/images/marker-icon-red.png',
+              iconSize: newIconSize,
+              iconAnchor: newIconAnchor,
+              popupAnchor: newpopupAnchor
+          });
+          myMarker.setIcon(newIcon);
+        }else{
+          // finally, declare a new icon and update the marker
+        iconUrl = myMarker._icon.src;
+           var newIcon = new L.Icon({
+              iconUrl: 'css/images/marker-icon-yellow.png',
+              iconSize: newIconSize,
+              iconAnchor: newIconAnchor,
+              popupAnchor: newpopupAnchor
+          });
+          myMarker.setIcon(newIcon);
+        }
+
+        //if this marker has open popup close it and reopen it to resize it
+      if(typeof openPopup === "undefined") {
+         myMarker.setIcon(newIcon);
+      }else if (myMarker._leaflet_id == openPopup._leaflet_id){
+          mymap.closePopup();
+          myMarker.setIcon(newIcon);
+          myMarker.openPopup();
+      }else{
+          myMarker.setIcon(newIcon);
       }
 
-      //size for each level
-      function sizeFactor(zoom) {
-        if (zoom <= 4) return .5;
-        else if (zoom == 5) return .5;
-        else if (zoom == 6) return .5;
-        else if (zoom == 7) return .5;
-        else if (zoom == 8) return .5;
-        else if (zoom == 9) return .5;
-        else if (zoom == 10) return 1.0;
-        else if (zoom == 11) return 1.0;
-        else if (zoom == 12) return 1.0;
-        else if (zoom == 13) return 1.0;
-        else if (zoom == 14) return 1.5;
-        else if (zoom == 15) return 1.5;
-        else if (zoom == 16) return 1.5;
-        else 
-        return 2.0;
-      }
+    }
+
+    //size for each level
+    function sizeFactor(zoom) {
+      if (zoom <= 4) return .5;
+      else if (zoom == 5) return .5;
+      else if (zoom == 6) return .5;
+      else if (zoom == 7) return .5;
+      else if (zoom == 8) return 1.0;
+      else if (zoom == 9) return 1.0;
+      else if (zoom == 10) return 1.0;
+      else if (zoom == 11) return 1.5;
+      else if (zoom == 12) return 1.5;
+      else if (zoom == 13) return 1.5;
+      else if (zoom == 14) return 2.0;
+      else if (zoom == 15) return 2.0;
+      else if (zoom == 16) return 2.0;
+      else 
+      return 2.5;
+    }
+     
+    });
 
    </script>
 
