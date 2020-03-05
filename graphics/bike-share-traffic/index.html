@@ -226,7 +226,7 @@
         var yes = [];
 
         for (var i = 1; i < arrsize; i++) {
-            marker = new L.circle([data[i].station_lat,data[i].station_long],{radius:Math.ceiling(data[i].total_out/1000)}).bindPopup("Total Arivals: " + data[i].total_in + "\nTotal Departures: " + data[i].total_out);
+            marker = new L.circleMarker([data[i].station_lat,data[i].station_long],{radius:Math.ceil(data[i].total_out/2000)}).bindPopup("Total Arivals: " + data[i].total_in + "\nTotal Departures: " + data[i].total_out);
             yes.push(marker);
             
         }
