@@ -204,7 +204,7 @@
 
       var streets  = L.tileLayer(mbUrl, {id: 'mapbox.streets',   attribution: mbAttr});
 
-    d3.csv(fileBase + "/dc-bike-analysis/data/bikeShareLocations.csv", function(data) {
+    d3.csv(fileBase + "/dc-bike-analysis/data/source data/bikeShareLocations.csv", function(data) {
 
       var planes = [];
 
@@ -250,23 +250,23 @@
         L.control.layers(baseMaps, overlayMaps).addTo(mymap);
         yesPoints.addTo(mymap);
 
-        var legend = L.control({position: 'bottomright'});
+        // var legend = L.control({position: 'bottomright'});
 
-        legend.onAdd = function (mymap) {
+        // legend.onAdd = function (mymap) {
 
-        var div = L.DomUtil.create('div', 'info legend'),
-          labels = [];
-          labels.push(
-          '<i style="background:' + "#FF0000" + '"></i>' + " Deaths");
-        labels.push(
-          '<i style="background:' + "#CCC62C" + '"></i>' + " Serious Injuries");
+        // var div = L.DomUtil.create('div', 'info legend'),
+        //   labels = [];
+        //   labels.push(
+        //   '<i style="background:' + "#FF0000" + '"></i>' + " Deaths");
+        // labels.push(
+        //   '<i style="background:' + "#CCC62C" + '"></i>' + " Serious Injuries");
 
 
-          div.innerHTML = labels.join('<br>');
-          return div;
-        };
+        //   div.innerHTML = labels.join('<br>');
+        //   return div;
+        // };
 
-        legend.addTo(mymap);
+        // legend.addTo(mymap);
 
         //this changes marker size when zoom changes
         mymap.on('zoomend', function() {

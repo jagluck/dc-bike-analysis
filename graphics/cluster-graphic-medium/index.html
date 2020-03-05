@@ -210,7 +210,7 @@
         layers: [streets]
       });
 
-      d3.csv(fileBase + "/dc-bike-analysis/data/clusteredAccidentLevelData/13clusteredAccidentLevelData.csv", function(data) {
+      d3.csv(fileBase + "/dc-bike-analysis/data/cluster data/datasets/13clusteredAccidentLevelData.csv", function(data) {
 
         var planes = [];
 
@@ -247,7 +247,7 @@
       }
 
       var legend = L.control({position: 'bottomright'});
-      var ourgeoJSON = jQuery.getJSON(fileBase + "/dc-bike-analysis/data/geoJSONS/13geoJSON.geojson", function( data ) {
+      var ourgeoJSON = jQuery.getJSON(fileBase + "/dc-bike-analysis/data/cluster data/geoJSONS/13geoJSON.geojson", function( data ) {
         var track = new L.geoJSON(data,{
           style: function(feature) {
 
