@@ -195,7 +195,7 @@
 <body>
   <div id="container" style="min-width: 300px; max-width: 700px; display: flex;flex-direction: column; margin: 0 auto">
   <h1>Movement between bike share locations.</h1>
-  <span style="height:8px; font-size:8pt; background-color:#2eb3f7; color:#2eb3f7;"></span><h3>BY JAKE GLUCK<a href="https://wamu.org/" target="_blank" style="text-decoration:none;"> | WAMU </a></h3>
+  <span style="height:8px; font-size:8pt; background-color:#0f9535; color:#0f9535;"></span><h3>BY JAKE GLUCK<a href="https://wamu.org/" target="_blank" style="text-decoration:none;"> | WAMU </a></h3>
   <h5>
       Add description of graphic here.
   </h5>
@@ -245,7 +245,7 @@
               x: 'start_station_long',
               y: 'start_station_lat'
             },
-            destinationUniqueIdField: 'end_station_id',
+            destinationUniqueIdField: 'end_station_name',
             destinationGeometry: {
               x: 'end_station_long',
               y: 'end_station_lat'
@@ -256,7 +256,7 @@
             field: 'total_ride',
             classBreakInfos: [{
               classMinValue: 0,
-              classMaxValue: 199,
+              classMaxValue: 19,
               symbol: {
                 strokeStyle: 'transparent',
                 lineWidth: 0,
@@ -266,19 +266,19 @@
               }
             },
              {
-              classMinValue: 200,
-              classMaxValue: 499,
+              classMinValue: 20,
+              classMaxValue: 49,
               symbol: {
                 strokeStyle: 'green',
-                lineWidth: 2,
+                lineWidth: 1,
                 lineCap: 'round',
                 shadowColor: 'green',
                 shadowBlur: 0
               }
             },
             {
-              classMinValue: 500,
-              classMaxValue: 1999,
+              classMinValue: 50,
+              classMaxValue: 99,
               symbol: {
                 strokeStyle: 'blue',
                 lineWidth: 5,
@@ -287,7 +287,7 @@
                 shadowBlur: 0
               }
             }, {
-              classMinValue: 2000,
+              classMinValue: 100,
               classMaxValue: 10000000,
               symbol: {
                 strokeStyle: 'red',

@@ -184,7 +184,7 @@
 <body>
   <div id="container" style="min-width: 300px; max-width: 700px; display: flex;flex-direction: column; margin: 0 auto">
   <h1>Locations of bike accident clusters in DC</h1>
-  <span style="height:8px; font-size:8pt; background-color:#2eb3f7; color:#2eb3f7;"></span><h3>BY JAKE GLUCK<a href="https://wamu.org/" target="_blank" style="text-decoration:none;"> | WAMU </a></h3>
+  <span style="height:8px; font-size:8pt; background-color:#0f9535; color:#0f9535;"></span><h3>BY JAKE GLUCK<a href="https://wamu.org/" target="_blank" style="text-decoration:none;"> | WAMU </a></h3>
   <h5>
       These hotspot were located using a clustering algorithim on bike accidents in DC. Click on the locations to view the hotspots highlighted in our story.
   </h5>
@@ -215,7 +215,9 @@
         layers: [streets]
       });
 
-      d3.csv(fileBase + "/dc-bike-analysis/data/cluster data/datasets/4clusteredAccidentLevelData.csv", function(data) {
+      d3.csv("http://localhost:8000/data/cluster data/datasets/4clusteredAccidentLevelData.csv", function(data) {
+
+      // d3.csv(fileBase + "/dc-bike-analysis/data/cluster data/datasets/4clusteredAccidentLevelData.csv", function(data) {
 
         var planes = [];
 
@@ -252,7 +254,9 @@
       }
 
       var legend = L.control({position: 'bottomright'});
-      var ourgeoJSON = jQuery.getJSON(fileBase + "/dc-bike-analysis/data/cluster data/geoJSONS/4geoJSON.geojson", function( data ) {
+      var ourgeoJSON = jQuery.getJSON("http://localhost:8000/data/cluster data/geoJSONS/4geoJSON.geojson", function(data) {
+
+      // var ourgeoJSON = jQuery.getJSON(fileBase + "/dc-bike-analysis/data/cluster data/geoJSONS/4geoJSON.geojson", function( data ) {
         var track = new L.geoJSON(data,{
           style: function(feature) {
 

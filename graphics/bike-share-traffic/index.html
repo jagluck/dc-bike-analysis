@@ -184,7 +184,7 @@
 <body>
   <div id="container" style="min-width: 300px; max-width: 700px; display: flex;flex-direction: column; margin: 0 auto">
   <h1>Locations of bike accidents on DC roads.</h1>
-  <span style="height:8px; font-size:8pt; background-color:#2eb3f7; color:#2eb3f7;"></span><h3>BY JAKE GLUCK<a href="https://wamu.org/" target="_blank" style="text-decoration:none;"> | WAMU </a></h3>
+  <span style="height:8px; font-size:8pt; background-color:#0f9535; color:#0f9535;"></span><h3>BY JAKE GLUCK<a href="https://wamu.org/" target="_blank" style="text-decoration:none;"> | WAMU </a></h3>
   <h5>
       Add description of graphic here.
   </h5>
@@ -213,10 +213,10 @@
         return Math.floor(x).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       }
 
-    d3.csv(fileBase + "/dc-bike-analysis/data/modified data/bikeShareStationTotals.csv", function(data) {
+    d3.csv("http://localhost:8000/data/modified data/bikeShareStationTotals.csv", function(data) {
+    // d3.csv(fileBase + "/dc-bike-analysis/data/modified data/bikeShareStationTotals.csv", function(data) {
 
       var planes = [];
-
       var yellowIcon = new L.Icon({
         iconUrl: 'css/images/marker-icon-yellow.png',
         iconSize: [9, 13.5],
@@ -236,11 +236,10 @@
         var departures = [];
 
         for (var i = 1; i < arrsize; i++) {
-            marker = new L.circleMarker([data[i].station_lat,data[i].station_long],{radius:Math.ceil(data[i].total_in/2000),color:'red',borderColor:'red'}).bindPopup("<p>Total Arivals: " + numberWithCommas(data[i].total_in) + "<br>Total Departures: " + numberWithCommas(data[i].total_out) + "</p>");
+            marker = new L.circleMarker([data[i].station_lat,data[i].station_long],{radius:Math.ceil(data[i].total_out/2000)}).bindPopup("<p>" + data[i].station+ "</p><p>Total Arivals: " + numberWithCommas(data[i].total_in) + "<br>Total Departures: " + numberWithCommas(data[i].total_out) + "</p>");
             arrivals.push(marker);
-            marker = new L.circleMarker([data[i].station_lat,data[i].station_long],{radius:Math.ceil(data[i].total_out/2000)}).bindPopup("<p>Total Arivals: " + numberWithCommas(data[i].total_in) + "<br>Total Departures: " + numberWithCommas(data[i].total_out) + "</p>");
+            marker = new L.circleMarker([data[i].station_lat,data[i].station_long],{radius:Math.ceil(data[i].total_out/2000)}).bindPopup("<p>" + data[i].station+ "</p><p>Total Arivals: " + numberWithCommas(data[i].total_in) + "<br>Total Departures: " + numberWithCommas(data[i].total_out) + "</p>");
             departures.push(marker);
-            
         }
 
         var arrivalPoints = L.layerGroup(arrivals);
